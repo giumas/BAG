@@ -1,0 +1,45 @@
+environment:
+
+  matrix:
+
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      VS_VERSION: Visual Studio 14
+      platform: x64
+      PYTHON_VERSION: 3.6
+      PYTHON_ARCH: x64
+      MINICONDA: C:\Miniconda36-x64
+
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      VS_VERSION: Visual Studio 15
+      platform: x64
+      PYTHON_VERSION: 3.7
+      PYTHON_ARCH: x64
+      MINICONDA: C:\Miniconda36-x64
+
+matrix:
+
+  allow_failures:
+
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      VS_VERSION: Visual Studio 15
+      platform: x64
+      PYTHON_VERSION: 3.7
+      PYTHON_ARCH: x64
+      MINICONDA: C:\Miniconda36-x64
+
+install:
+  - set PATH=%MINICONDA%;%MINICONDA%\Scripts;%PATH%
+
+  # Install the build and runtime dependencies of the project.
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - conda config --add channels conda-forge
+  - conda create -q -n test-environment python=%PYTHON_VERSION%
+  - activate test-environment
+  - conda install cmake hdf5 libxml2
+  # Check that we have the expected version of Python
+  - python --version
+
+build: off
+deploy: off
