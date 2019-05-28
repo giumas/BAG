@@ -55,11 +55,14 @@ build_script:
   - rename beecrypt-4.1.2 beecrypt
   - cd beecrypt
   - nmake -f Makefile_bag X64=TRUE DEBUG=FALSE
+  - nmake -f Makefile_bag clean
+  - nmake -f Makefile_bag X64=TRUE DEBUG=TRUE  
   - cd ..
   - cd ..
   - mkdir -p build
   - cd build
-  - cmake ..
+  - if %VS%==2015 cmake -G "Visual Studio 14 2015 Win64" ..
+  - if %VS%==2017 cmake -G "Visual Studio 15 2017 Win64" ..  
   - make
   
 deploy: off
