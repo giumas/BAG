@@ -5,6 +5,7 @@ environment:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       VS_VERSION: Visual Studio 14
       platform: x64
+      VS: 2015
       PYTHON_VERSION: 3.6
       PYTHON_ARCH: x64
       MINICONDA: C:\Miniconda36-x64
@@ -12,6 +13,7 @@ environment:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       VS_VERSION: Visual Studio 15
       platform: x64
+      VS: 2017
       PYTHON_VERSION: 3.7
       PYTHON_ARCH: x64
       MINICONDA: C:\Miniconda36-x64
@@ -41,12 +43,9 @@ install:
   - conda list --show-channel-urls
   # Check that we have the expected version of Python
   - python --version
-  - if [[ "%APPVEYOR_BUILD_WORKER_IMAGE%" == "Visual Studio 2015" ]]; then
-      call "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64;
-      call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64;
-    else
-      call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat";
-    fi
+  - if %VS%==2015 call "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64
+  - if %VS%==2015 call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64;
+  - if %VS%==2017 call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat";
 
 build: off
 build_script:
