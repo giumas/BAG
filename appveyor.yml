@@ -38,8 +38,23 @@ install:
   - conda create -q -n test-environment python=%PYTHON_VERSION%
   - activate test-environment
   - conda install cmake hdf5 libxml2
+  - conda list --show-channel-urls
   # Check that we have the expected version of Python
   - python --version
 
 build: off
+build_script:
+  - cd
+  - cd extlibs
+  - tar -xzf beecrypt-4.2.1.tar.gz
+  - rename beecrypt-4.2.1 beecrypt
+  - cd beecrypt
+  - nmake -f Makefile_bag X64=TRUE DEBUG=FALSE
+  - cd ..
+  - cd ..
+  - mkdir -p build
+  - cd build
+  - cmake ..
+  - make
+  
 deploy: off
