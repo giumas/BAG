@@ -51,8 +51,8 @@ build: off
 build_script:
   - cd
   - cd extlibs
-  - tar -xzf beecrypt-4.2.1.tar.gz
-  - rename beecrypt-4.2.1 beecrypt
+  - tar -xzf beecrypt-4.1.2.tar.gz
+  - rename beecrypt-4.1.2 beecrypt
   - cd beecrypt
   - nmake -f Makefile_bag X64=TRUE DEBUG=FALSE
   - cd ..
